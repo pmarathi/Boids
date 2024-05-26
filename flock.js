@@ -25,8 +25,7 @@ class Flock {
             for(let j = 0; j < this.boids.length; j++){
                 let b2 = this.boids[j];
                 if(b1 != b2){
-                    // non in place version of subtract
-                    let dist = p5.Vector.sub(b1.position, b2.position);
+                    let dist = b1.position.sub(b2.position).mag();
                     if(dist < this.neighborRadius){
                         neighbors.push(b2);
                     }
@@ -34,14 +33,16 @@ class Flock {
             }
             //perform updates for this specific boid
             //breaking encapsulation...?
-            console.log('updating boid %d at %f, %f', i, b1.position.x, b1.position.y);
+            console.log('updating boid %d', i);
             b1.update(neighbors);          
         }
     }
 
 
     // renders each boid in the flock
-    render() {
-        this.boids.forEach((b) => { b.render()});
+    render(){
+        for(let i = 0; i < this.boids.length; i++){
+            this.boids[i].render();
+        }
     }
 }

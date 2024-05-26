@@ -11,6 +11,20 @@ class Boid {
         this.edges();
         //TODO: implement coefficients for each of these
         //TODO: redundancy and efficiency optimizations
+
+        // let separationVector = this.separation(neighbors);
+        // let alignmentVector = this.alignment(neighbors);
+        // let cohesionVector = this.cohesion(neighbors);
+        // console.log(separationVector);
+        // console.log(alignmentVector);
+        // console.log(cohesionVector);
+
+        // this.velocity.add(separationVector);
+        // this.velocity.add(alignmentVector);
+        // this.velocity.add(cohesionVector);
+        // this.velocity.normalize();
+
+        console.log(this.velocity);
         this.position.add(this.velocity);
 
         if(isNaN(this.velocity.x) || isNaN(this.velocity.y)){
@@ -37,47 +51,15 @@ class Boid {
             this.position.y = -10;
         }
     }
+
     
-    // if two boids get too close together we want them to fly apart
-    separation(neighbors){
-        let separationVector = createVector(0, 0);
-        for(let i = 0; i < neighbors.length; i++){
-            let neighbor = neighbors[i];
-            separationVector.add(this.position.sub(neighbor));
-        }
-        separationVector.normalize();
-        return separationVector;
-    }
-
-    // boids match angle of nearby boids
-    alignment(neighbors){
-        let alignmentVector = createVector(0, 0);
-        for(let i = 0; i < neighbors.length; i++){
-            let neighbor = neighbors[i];
-            alignmentVector.add(neighbor.velocity);
-        }
-        alignmentVector.normalize();
-        return alignmentVector;
-    }
-
-    // every bird attempts to move towards the center
-    cohesion(neighbors){
-        let averagePosition = createVector(0, 0);
-        for(let i = 0; i < neighbors.length; i++){
-            let neighbor = neighbors[i];
-            averagePosition.add(neighbor.position);
-        }
-        // need to avoid divide by zero here
-        // averagePosition.div(neighbors.length);
-        let cohesionVector = this.position.sub(averagePosition);
-        return cohesionVector;
-    }
 
     //used by sketch.js to render each individual boid
-    render() {
+    render(){
         push()
         translate(this.position.x, this.position.y)
         rotate(this.orientation)
+        let speed = this.velocity.mag();
         fill(255, 255, 255)
         triangle(10, 0, -10, -7, -10, 7)
         pop()
