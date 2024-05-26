@@ -1,6 +1,7 @@
 
 // represents a group of boids to render
 class Flock {
+    
     constructor(numBoids, neighborRadius){
         this.numBoids = numBoids;
         this.neighborRadius = neighborRadius;
@@ -9,6 +10,7 @@ class Flock {
             let xPos = Math.random() * windowWidth
             let yPos = Math.random() * windowHeight
             let orientation = 2 * PI * Math.random(); // radians for orientation
+            // console.log('%d boid\'s start position: %f, %f', i, xPos, yPos);
             this.boids.push(new Boid(xPos, yPos, orientation));
         }
     }
@@ -20,11 +22,22 @@ class Flock {
             let b1 = this.boids[i];
             //find neighbors of this boid
             let neighbors = [];
-            for(let j = 0; j < this.numBoids; j++){
-                // if()
+            for(let j = 0; j < this.boids.length; j++){
+                let b2 = this.boids[j];
+                if(b1 != b2){
+                    let dist = b1.position.sub(b2.position).mag();
+                    if(dist < this.neighborRadius){
+                        neighbors.push(b2);
+                    }
+                }
             }
+            //perform updates for this specific boid
+            //breaking encapsulation...?
+            console.log('updating boid %d', i);
+            b1.update(neighbors);          
         }
     }
+
 
     // renders each boid in the flock
     render(){
