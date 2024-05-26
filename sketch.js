@@ -5,7 +5,7 @@ let flock
 function setup() {
     createCanvas(windowWidth, windowHeight);
     // createCanvas(400, 400);
-    flock = new Flock(1, 10);
+    flock = new Flock(2, 10);
 }
 
 //renders the graphics
