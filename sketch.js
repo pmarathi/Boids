@@ -1,16 +1,14 @@
-let boid
 let hueSlider
+let flock
 
+// prepares p5 resources for rendering
 function setup() {
-    createCanvas(400, 400);
-    boid = new Boid(100, 100, 0);
-    // hueSlider = createSlider(0, 255, 0);
-    // hueSlider.position(10, height - 30);
-    // hueSlider.style('width', '380px');
+    createCanvas(windowWidth, windowHeight);
+    flock = new Flock(10, 10);
 }
 
+//renders the graphics
 function draw() {
     background(220);
-    // let hue = hueSlider.value();
-    boid.render(hue);
+    flock.render();
 }

@@ -1,5 +1,5 @@
+// represents an individual
 class Boid {
-    // TODO: store a global list of all Boids
     constructor(xPos, yPos, orientation){
         this.orientation = orientation
         this.position = createVector(xPos, yPos);
