@@ -9,7 +9,7 @@ function setup() {
     let width = windowWidth - 20;
     let height = windowHeight - 20;
     createCanvas(width, height);
-    flock = new Flock(100, 10, width, height);
+    flock = new Flock(200, 50, width, height);
 
     //sliders
     cohesionSlider = createSlider(0, 10, 1);
