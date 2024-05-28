@@ -9,13 +9,22 @@ class Boid {
     // updates instance variables according to neighbors
     update(neighbors) {
         this.edges();
+        //TODO: implement coefficients for each of these
+        //TODO: redundancy and efficiency optimizations
         let separationVector = this.separation(neighbors);
         let alignmentVector = this.alignment(neighbors);
         let cohesionVector = this.cohesion(neighbors);
+        let mouseVector = this.towardsMouse();
 
         this.velocity.add(separationVector.mult(Boid.separationFactor));        
         this.velocity.add(alignmentVector.mult(Boid.alignmentFactor));        
         this.velocity.add(cohesionVector.mult(Boid.cohesionFactor));
+        if(Boid.leftPressed){
+            this.velocity.add(mouseVector.mult(Boid.leftPressed));
+        }
+        if(Boid.rightPressed){
+            this.velocity.sub(mouseVector.mult(Boid.rightPressed));
+        }
         this.velocity.normalize();
 
         this.position.add(this.velocity.mult(Boid.speed));
@@ -29,6 +38,7 @@ class Boid {
         this.orientation = this.velocity.heading();
     }
 
+    // boids try not to run into each other
     separation(neighbors){
         let separationVector = createVector(0, 0);
         for(let i = 0; i < neighbors.length; i++){
@@ -54,6 +64,7 @@ class Boid {
         return cohesionVector;
     }
 
+    // creates the alignment vector making close boids face similar directions
     alignment(neighbors){
         let alignmentVector = createVector(0, 0);
         for(let i = 0; i < neighbors.length; i++){
@@ -79,6 +90,12 @@ class Boid {
         if (this.position.y > Boid.height + boundary) {
             this.position.y = -boundary;
         }
+    }
+
+    towardsMouse(){
+        let mouseVector = createVector(mouseX, mouseY);
+        mouseVector.sub(this.position).div(100);
+        return mouseVector;
     }
 
     

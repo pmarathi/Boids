@@ -47,3 +47,13 @@ function draw() {
     flock.render();
     flock.update();
 }
+
+function mousePressed() {
+    if (mouseButton === LEFT) Boid.leftPressed = 1;
+    if (mouseButton === RIGHT) Boid.rightPressed = 1;
+}
+
+function mouseReleased() {
+    if (mouseButton === LEFT) Boid.leftPressed = 0;
+    if (mouseButton === RIGHT) Boid.rightPressed = 0;
+}
