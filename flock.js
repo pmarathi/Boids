@@ -2,13 +2,15 @@
 // represents a group of boids to render
 class Flock {
     
-    constructor(numBoids, neighborRadius){
+    constructor(numBoids, neighborRadius, width, height){
         this.numBoids = numBoids;
         this.neighborRadius = neighborRadius;
         this.boids = [];
         for(let i = 0; i < numBoids; i++){
-            let xPos = Math.random() * windowWidth;
-            let yPos = Math.random() * windowHeight;
+            let xPos = Math.random() * width;
+            let yPos = Math.random() * height;
+            Boid.width = width;
+            Boid.height = height;
             let orientation = 2 * PI * Math.random(); // radians for orientation
             // console.log('%d boid\'s start position: %f, %f', i, xPos, yPos);
             this.boids.push(new Boid(xPos, yPos, orientation));

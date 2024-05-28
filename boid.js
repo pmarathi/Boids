@@ -19,12 +19,14 @@ class Boid {
         console.log(alignmentVector);
         console.log(cohesionVector);
 
-        this.velocity.add(separationVector);        
-        this.velocity.add(alignmentVector);        
-        this.velocity.add(cohesionVector);
+        this.velocity.add(separationVector.mult(Boid.separationFactor));        
+        this.velocity.add(alignmentVector.mult(Boid.alignmentFactor));        
+        this.velocity.add(cohesionVector.mult(Boid.cohesionFactor));
         this.velocity.normalize();
 
-        this.position.add(this.velocity);
+        let speed_limit = 3;
+
+        this.position.add(this.velocity.mult(speed_limit));
 
         if(isNaN(this.velocity.x) || isNaN(this.velocity.y)){
             throw new Error("velocity is NaN");
@@ -74,15 +76,15 @@ class Boid {
     edges(){
         let boundary = 10;
         if (this.position.x < -boundary) {
-            this.position.x = windowWidth + boundary;
+            this.position.x = Boid.width + boundary;
         }
-        if (this.position.x > windowWidth + boundary) {
+        if (this.position.x > Boid.width + boundary) {
             this.position.x = -boundary;
         }
         if (this.position.y < -boundary) {
-            this.position.y = windowHeight + boundary;
+            this.position.y = Boid.height + boundary;
         }
-        if (this.position.y > windowHeight + boundary) {
+        if (this.position.y > Boid.height + boundary) {
             this.position.y = -boundary;
         }
     }
@@ -91,12 +93,12 @@ class Boid {
 
     //used by sketch.js to render each individual boid
     render(){
-        push()
-        translate(this.position.x, this.position.y)
-        rotate(this.orientation)
+        push();
+        translate(this.position.x, this.position.y);
+        rotate(this.orientation);
         let speed = this.velocity.mag();
-        fill(255, 255, 255)
-        triangle(10, 0, -10, -7, -10, 7)
-        pop()
+        fill(255, 255, 255);
+        triangle(10, 0, -10, -7, -10, 7);
+        pop();
     }
 }
