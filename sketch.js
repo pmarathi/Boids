@@ -36,7 +36,7 @@ function draw() {
     text2.html(`Separation Factor: ${Boid.separationFactor}`);
     text3.html(`Alignment Factor: ${Boid.alignmentFactor}`);
     let fps = frameRate();
-    text(`FPS: ${fps.toFixed(2)}`, 20, 150);
+    text(`FPS: ${fps.toFixed(2)}`, windowWidth - 100, windowHeight - 25);
     flock.render();
     flock.update();
 }
