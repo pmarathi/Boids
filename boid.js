@@ -9,15 +9,9 @@ class Boid {
     // updates instance variables according to neighbors
     update(neighbors) {
         this.edges();
-        //TODO: implement coefficients for each of these
-        //TODO: redundancy and efficiency optimizations
-
         let separationVector = this.separation(neighbors);
         let alignmentVector = this.alignment(neighbors);
         let cohesionVector = this.cohesion(neighbors);
-        console.log(separationVector);
-        console.log(alignmentVector);
-        console.log(cohesionVector);
 
         this.velocity.add(separationVector.mult(Boid.separationFactor));        
         this.velocity.add(alignmentVector.mult(Boid.alignmentFactor));        

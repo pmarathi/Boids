@@ -12,7 +12,6 @@ class Flock {
             Boid.width = width;
             Boid.height = height;
             let orientation = 2 * PI * Math.random(); // radians for orientation
-            // console.log('%d boid\'s start position: %f, %f', i, xPos, yPos);
             this.boids.push(new Boid(xPos, yPos, orientation));
         }
     }
@@ -33,13 +32,7 @@ class Flock {
                     }
                 }
             }
-            // if(neighbors.length > 1){
-            //     throw Error('neighbors more than 1');
-            // }
             //perform updates for this specific boid
-            //breaking encapsulation...?
-            console.log('updating boid %d', i);
-            console.log(b1.velocity);
             b1.update(neighbors);          
         }
     }
