@@ -24,9 +24,7 @@ class Boid {
         this.velocity.add(cohesionVector.mult(Boid.cohesionFactor));
         this.velocity.normalize();
 
-        let speed_limit = 3;
-
-        this.position.add(this.velocity.mult(speed_limit));
+        this.position.add(this.velocity.mult(Boid.speed));
 
         if(isNaN(this.velocity.x) || isNaN(this.velocity.y)){
             throw new Error("velocity is NaN");
