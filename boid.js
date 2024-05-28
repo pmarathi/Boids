@@ -3,7 +3,7 @@ class Boid {
     constructor(xPos, yPos, orientation){
         this.orientation = orientation;
         this.position = createVector(xPos, yPos);
-        this.velocity = createVector(Math.random() * 2 - 1, Math.random() * 2 - 1);
+        this.velocity = createVector(Math.sin(orientation), Math.cos(orientation));
     }
 
     // updates instance variables according to neighbors
@@ -12,19 +12,18 @@ class Boid {
         //TODO: implement coefficients for each of these
         //TODO: redundancy and efficiency optimizations
 
-        // let separationVector = this.separation(neighbors);
-        // let alignmentVector = this.alignment(neighbors);
-        // let cohesionVector = this.cohesion(neighbors);
-        // console.log(separationVector);
-        // console.log(alignmentVector);
-        // console.log(cohesionVector);
+        let separationVector = this.separation(neighbors);
+        let alignmentVector = this.alignment(neighbors);
+        let cohesionVector = this.cohesion(neighbors);
+        console.log(separationVector);
+        console.log(alignmentVector);
+        console.log(cohesionVector);
 
-        // this.velocity.add(separationVector);
-        // this.velocity.add(alignmentVector);
-        // this.velocity.add(cohesionVector);
-        // this.velocity.normalize();
+        this.velocity.add(separationVector);        
+        this.velocity.add(alignmentVector);        
+        this.velocity.add(cohesionVector);
+        this.velocity.normalize();
 
-        console.log(this.velocity);
         this.position.add(this.velocity);
 
         if(isNaN(this.velocity.x) || isNaN(this.velocity.y)){
@@ -36,19 +35,55 @@ class Boid {
         this.orientation = this.velocity.heading();
     }
 
+    separation(neighbors){
+        let separationVector = createVector(0, 0);
+        for(let i = 0; i < neighbors.length; i++){
+            let neighbor = neighbors[i];
+            separationVector.add(p5.Vector.sub(this.position, neighbor.position));
+        }
+        separationVector.normalize();
+        return separationVector;
+    }
+
+    // boids attempt to go towards the average position
+    cohesion(neighbors){
+        let averagePosition = createVector(0, 0);
+        if(neighbors.length == 0){
+            return averagePosition;
+        }
+        for(let i = 0; i < neighbors.length; i++){
+            let neighbor = neighbors[i];
+            averagePosition.add(neighbor.position);
+        }
+        let cohesionVector = p5.Vector.sub(averagePosition, this.position);
+        cohesionVector.normalize();
+        return cohesionVector;
+    }
+
+    alignment(neighbors){
+        let alignmentVector = createVector(0, 0);
+        for(let i = 0; i < neighbors.length; i++){
+            let neighbor = neighbors[i];
+            alignmentVector.add(neighbor.velocity);
+        }
+        alignmentVector.normalize();
+        return alignmentVector;
+    }
+
     // ensures that all boids are visible
     edges(){
-        if (this.position.x < -10) {
-            this.position.x = windowWidth + 10;
+        let boundary = 10;
+        if (this.position.x < -boundary) {
+            this.position.x = windowWidth + boundary;
         }
-        if (this.position.x > windowWidth + 10) {
-            this.position.x = -10;
+        if (this.position.x > windowWidth + boundary) {
+            this.position.x = -boundary;
         }
-        if (this.position.y < -10) {
-            this.position.y = windowHeight + 10;
+        if (this.position.y < -boundary) {
+            this.position.y = windowHeight + boundary;
         }
-        if (this.position.y > windowHeight + 10) {
-            this.position.y = -10;
+        if (this.position.y > windowHeight + boundary) {
+            this.position.y = -boundary;
         }
     }
 

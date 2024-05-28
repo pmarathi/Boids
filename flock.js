@@ -7,8 +7,8 @@ class Flock {
         this.neighborRadius = neighborRadius;
         this.boids = [];
         for(let i = 0; i < numBoids; i++){
-            let xPos = Math.random() * windowWidth
-            let yPos = Math.random() * windowHeight
+            let xPos = Math.random() * windowWidth;
+            let yPos = Math.random() * windowHeight;
             let orientation = 2 * PI * Math.random(); // radians for orientation
             // console.log('%d boid\'s start position: %f, %f', i, xPos, yPos);
             this.boids.push(new Boid(xPos, yPos, orientation));
@@ -26,15 +26,18 @@ class Flock {
                 let b2 = this.boids[j];
                 if(b1 != b2){
                     let dist = p5.Vector.sub(b1.position, b2.position).mag();
-                    // let dist = b1.position.sub(b2.position).mag();
                     if(dist < this.neighborRadius){
                         neighbors.push(b2);
                     }
                 }
             }
+            // if(neighbors.length > 1){
+            //     throw Error('neighbors more than 1');
+            // }
             //perform updates for this specific boid
             //breaking encapsulation...?
             console.log('updating boid %d', i);
+            console.log(b1.velocity);
             b1.update(neighbors);          
         }
     }
