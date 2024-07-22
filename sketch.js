@@ -86,16 +86,13 @@ function updateNumBoids() {
 // renders the graphics
 function draw() {
     background(0);
-    // factors are multiplied by certain constants for a better user experience
-    let cohesionalignmentModifier = 4;
-    let seperationModifier = 2;
-    Boid.cohesionFactor = cohesionSlider.value() / cohesionalignmentModifier;
-    Boid.separationFactor = separationSlider.value() * seperationModifier;
-    Boid.alignmentFactor = alignmentSlider.value() / cohesionalignmentModifier;
+    Boid.cohesionFactor = cohesionSlider.value();
+    Boid.separationFactor = separationSlider.value();
+    Boid.alignmentFactor = alignmentSlider.value();
     Boid.speed = speedSlider.value();
-    cohesionText.html(`Cohesion Factor: ${Boid.cohesionFactor * cohesionalignmentModifier}`);
-    separationText.html(`Separation Factor: ${Boid.separationFactor / seperationModifier}`);
-    alignmentText.html(`Alignment Factor: ${Boid.alignmentFactor * cohesionalignmentModifier}`);
+    cohesionText.html(`Cohesion Factor: ${Boid.cohesionFactor}`);
+    separationText.html(`Separation Factor: ${Boid.separationFactor}`);
+    alignmentText.html(`Alignment Factor: ${Boid.alignmentFactor}`);
     numText.html(`Number: ${numSlider.value()}`);
     speedText.html(`Speed: ${Boid.speed}`);
     updateNumBoids();
