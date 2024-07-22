@@ -9,7 +9,7 @@ let number;
 
 // Timestamp to track the last update
 let lastUpdateTime = 0;
-const updateInterval = 1000; // 1 second in milliseconds
+const updateInterval = 500; // 1 second in milliseconds
 
 // prepares p5 resources for rendering
 function setup() {
@@ -24,7 +24,7 @@ function setup() {
     separationSlider = createSlider(0, 10, 3);
     alignmentSlider = createSlider(0, 5, 3);
     speedSlider = createSlider(0, 10, 3);
-    numSlider = createSlider(0, 200, 100);
+    numSlider = createSlider(0, 300, 100);
 
     // text for sliders
     cohesionText = createDiv(`Cohesion Factor: ${cohesionSlider.value()}`);
