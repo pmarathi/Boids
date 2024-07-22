@@ -9,9 +9,10 @@ class Boid {
 
     // updates instance variables according to neighbors
     update(neighbors) {
-        let separationVector = this.separation(neighbors);
-        let alignmentVector = this.alignment(neighbors);
-        let cohesionVector = this.cohesion(neighbors);
+        // let separationVector = this.separation(neighbors);
+        // let alignmentVector = this.alignment(neighbors);
+        // let cohesionVector = this.cohesion(neighbors);
+        let [cohesionVector, alignmentVector, separationVector] = this.generateVectors(neighbors);
         let mouseVector = this.towardsMouse();
 
         this.velocity.add(separationVector.mult(Boid.separationFactor));        
@@ -29,12 +30,18 @@ class Boid {
         this.edges();
     }
 
-    // boids try not to run into each other
-    separation(neighbors){
-        let separationVector = createVector(0, 0);
+    generateVectors(neighbors){
         let total = 0;
+        let separationVector = createVector(0, 0);
+        let averageVelocity = createVector(0, 0);
+        let averagePosition = createVector(0, 0);
         for(let i = 0; i < neighbors.length; i++){
             let neighbor = neighbors[i];
+            //cohesion
+            averagePosition.add(neighbor.position);
+            // alignment
+            averageVelocity.add(neighbor.velocity);
+            // separation calculation
             let diff = p5.Vector.sub(this.position, neighbor.position);
             let distance = diff.mag();
             // temp separation distance
@@ -44,43 +51,20 @@ class Boid {
                 total += 1
             }
         }
-        if (total > 0) {
+        if(total > 0){
             separationVector.div(total);
+            separationVector.mult(10);
         }
-        separationVector.mult(10);
-        return separationVector;
-    }
-
-    // boids attempt to go towards the average position
-    cohesion(neighbors){
-        let averagePosition = createVector(0, 0);
-        if(neighbors.length == 0){
-            return averagePosition;
-        }
-        for(let i = 0; i < neighbors.length; i++){
-            let neighbor = neighbors[i];
-            averagePosition.add(neighbor.position);
-        }
+        // cohesion
         averagePosition.div(neighbors.length); // Find the average position
         let cohesionVector = p5.Vector.sub(averagePosition, this.position);
         cohesionVector.normalize();
         cohesionVector.div(8);
-        return cohesionVector;
-    }
-
-    // creates the alignment vector making close boids face similar directions
-    alignment(neighbors){
-        let averageVelocity = createVector(0, 0);
-        if(neighbors.length == 0){
-            return averageVelocity;
-        }
-        for(let i = 0; i < neighbors.length; i++){
-            let neighbor = neighbors[i];
-            averageVelocity.add(neighbor.velocity);
-        }
+        //alignment
         averageVelocity.div(neighbors.length);
         let alignmentVector = p5.Vector.sub(averageVelocity, this.velocity);
-        return alignmentVector.div(8);
+        alignmentVector = alignmentVector.div(8);
+        return [cohesionVector, alignmentVector, separationVector];
     }
 
     // ensures that all boids are visible
