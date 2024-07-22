@@ -16,15 +16,16 @@ function setup() {
     let width = windowWidth - 20;
     let height = windowHeight - 20;
     createCanvas(windowWidth, windowHeight).parent('p5-container');
-    flock = new Flock(100, 50, width, height);
-    number = 100;
+    let initial_num_boids = 150;
+    flock = new Flock(initial_num_boids, 50, width, height);
+    number = initial_num_boids;
 
     // sliders
     cohesionSlider = createSlider(0, 5, 3);     
     separationSlider = createSlider(0, 10, 3);
     alignmentSlider = createSlider(0, 5, 3);
     speedSlider = createSlider(0, 10, 3);
-    numSlider = createSlider(0, 300, 100);
+    numSlider = createSlider(0, 400, 150);
 
     // text for sliders
     cohesionText = createDiv(`Cohesion Factor: ${cohesionSlider.value()}`);
