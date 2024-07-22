@@ -55,6 +55,7 @@ class Boid {
         if (total > 0) {
             separationVector.div(total);
         }
+        separationVector.mult(10);
         return separationVector;
     }
 
@@ -68,25 +69,26 @@ class Boid {
             let neighbor = neighbors[i];
             averagePosition.add(neighbor.position);
         }
+        averagePosition.div(neighbors.length); // Find the average position
         let cohesionVector = p5.Vector.sub(averagePosition, this.position);
-        cohesionVector.div(neighbors.length);
         cohesionVector.normalize();
+        cohesionVector.div(8);
         return cohesionVector;
     }
 
     // creates the alignment vector making close boids face similar directions
     alignment(neighbors){
-        let alignmentVector = createVector(0, 0);
+        let averageVelocity = createVector(0, 0);
         if(neighbors.length == 0){
-            return alignmentVector;
+            return averageVelocity;
         }
         for(let i = 0; i < neighbors.length; i++){
             let neighbor = neighbors[i];
-            alignmentVector.add(neighbor.velocity);
+            averageVelocity.add(neighbor.velocity);
         }
-        alignmentVector.div(neighbors.length);
-        alignmentVector.normalize();
-        return alignmentVector;
+        averageVelocity.div(neighbors.length);
+        let alignmentVector = p5.Vector.sub(averageVelocity, this.velocity);
+        return alignmentVector.div(8);
     }
 
     // ensures that all boids are visible

@@ -25,7 +25,7 @@ class Flock {
             let neighbors = [];
             for(let j = 0; j < this.boids.length; j++){
                 let b2 = this.boids[j];
-                if(b1 != b2){
+                if(b1 !== b2){
                     let dist = p5.Vector.sub(b1.position, b2.position).mag();
                     if(dist < this.neighborRadius){
                         neighbors.push(b2);
