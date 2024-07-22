@@ -20,51 +20,45 @@ function setup() {
     number = 100;
 
     // sliders
-    cohesionSlider = createSlider(0, 5, 1);
-    cohesionSlider.position(10, windowHeight - 10);
+    cohesionSlider = createSlider(0, 5, 3);     
     separationSlider = createSlider(0, 10, 3);
-    separationSlider.position(200, windowHeight - 10);
-    alignmentSlider = createSlider(0, 5, 1);
-    alignmentSlider.position(400, windowHeight - 10);
+    alignmentSlider = createSlider(0, 5, 3);
     speedSlider = createSlider(0, 10, 3);
-    speedSlider.position(600, windowHeight - 10);
     numSlider = createSlider(0, 200, 100);
-    numSlider.position(800, windowHeight - 10);
 
     // text for sliders
     cohesionText = createDiv(`Cohesion Factor: ${cohesionSlider.value()}`);
-    cohesionText.position(cohesionSlider.x, cohesionSlider.y - 15);
     cohesionText.style('color', 'white');
     separationText = createDiv(`Separation Factor: ${separationSlider.value()}`);
-    separationText.position(separationSlider.x, separationSlider.y - 15);
     separationText.style('color', 'white');
     alignmentText = createDiv(`Alignment Factor: ${alignmentSlider.value()}`);
-    alignmentText.position(alignmentSlider.x, alignmentSlider.y - 15);
     alignmentText.style('color', 'white');
     speedText = createDiv(`Speed: ${speedSlider.value()}`);
-    speedText.position(speedSlider.x, speedSlider.y - 15);
     speedText.style('color', 'white');
     numText = createDiv(`Number: ${numSlider.value()}`);
-    numText.position(numSlider.x, numSlider.y - 15);
     numText.style('color', 'white');
+    windowResized();
 }
 
 function updateSliderPositions() {
-    cohesionSlider.position(10, height - 20);
-    separationSlider.position(210, height - 20);
-    alignmentSlider.position(410, height - 20);
-    speedSlider.position(610, height - 20);
-    numSlider.position(810, height - 20);
+    let heightAdjust = 20;
+    cohesionSlider.position(10, height - heightAdjust);
+    separationSlider.position(210, height - heightAdjust);
+    alignmentSlider.position(410, height - heightAdjust);
+    speedSlider.position(610, height - heightAdjust);
+    numSlider.position(810, height - heightAdjust);
 }
 
 function updateTextPositions() {
-    cohesionText.position(cohesionSlider.x, cohesionSlider.y - 15);
-    separationText.position(separationSlider.x, separationSlider.y - 15);
-    alignmentText.position(alignmentSlider.x, alignmentSlider.y - 15);
-    speedText.position(speedSlider.x, speedSlider.y - 15);
-    numText.position(numSlider.x, numSlider.y - 15);
+    let textAdjust = 15;
+    cohesionText.position(cohesionSlider.x, cohesionSlider.y - textAdjust);
+    separationText.position(separationSlider.x, separationSlider.y - textAdjust);
+    alignmentText.position(alignmentSlider.x, alignmentSlider.y - textAdjust);
+    speedText.position(speedSlider.x, speedSlider.y - textAdjust);
+    numText.position(numSlider.x, numSlider.y - textAdjust);
 }
 
+//adjusts settings when window is resized
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
     width = windowWidth;
@@ -84,7 +78,6 @@ function updateNumBoids() {
         if (number !== numSlider.value()) {
             flock = new Flock(numSlider.value(), 50, width, height);
             number = numSlider.value();
-            // Update the timestamp
             lastUpdateTime = currentTime;
         }
     }
@@ -92,21 +85,20 @@ function updateNumBoids() {
 
 // renders the graphics
 function draw() {
-    background(0);    
-    Boid.cohesionFactor = cohesionSlider.value();
-    Boid.separationFactor = separationSlider.value() * 2;
-    Boid.alignmentFactor = alignmentSlider.value();
+    background(0);
+    // factors are multiplied by certain constants for a better user experience
+    let cohesionalignmentModifier = 4;
+    let seperationModifier = 2;
+    Boid.cohesionFactor = cohesionSlider.value() / cohesionalignmentModifier;
+    Boid.separationFactor = separationSlider.value() * seperationModifier;
+    Boid.alignmentFactor = alignmentSlider.value() / cohesionalignmentModifier;
     Boid.speed = speedSlider.value();
-    cohesionText.html(`Cohesion Factor: ${Boid.cohesionFactor}`);
-    separationText.html(`Separation Factor: ${Boid.separationFactor / 2}`);
-    alignmentText.html(`Alignment Factor: ${Boid.alignmentFactor}`);
+    cohesionText.html(`Cohesion Factor: ${Boid.cohesionFactor * cohesionalignmentModifier}`);
+    separationText.html(`Separation Factor: ${Boid.separationFactor / seperationModifier}`);
+    alignmentText.html(`Alignment Factor: ${Boid.alignmentFactor * cohesionalignmentModifier}`);
     numText.html(`Number: ${numSlider.value()}`);
     speedText.html(`Speed: ${Boid.speed}`);
-    let fps = frameRate();
-
     updateNumBoids();
-
-    text(`FPS: ${fps.toFixed(2)}`, windowWidth - 100, windowHeight - 25);
     flock.render();
     flock.update();
 }

@@ -10,8 +10,6 @@ class Boid {
     // updates instance variables according to neighbors
     update(neighbors) {
         this.edges();
-        //TODO: implement coefficients for each of these
-        //TODO: redundancy and efficiency optimizations
         let separationVector = this.separation(neighbors);
         let alignmentVector = this.alignment(neighbors);
         let cohesionVector = this.cohesion(neighbors);
@@ -53,7 +51,6 @@ class Boid {
                 separationVector.add(diff);
                 total += 1
             }
-            // separationVector.add(p5.Vector.sub(this.position, neighbor.position));
         }
         if (total > 0) {
             separationVector.div(total);
