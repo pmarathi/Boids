@@ -9,7 +9,6 @@ class Boid {
 
     // updates instance variables according to neighbors
     update(neighbors) {
-        this.edges();
         let separationVector = this.separation(neighbors);
         let alignmentVector = this.alignment(neighbors);
         let cohesionVector = this.cohesion(neighbors);
@@ -25,16 +24,9 @@ class Boid {
             this.velocity.sub(mouseVector.mult(Boid.rightPressed));
         }
         this.velocity.normalize();
-
         this.position.add(this.velocity.mult(Boid.speed));
-
-        if(isNaN(this.velocity.x) || isNaN(this.velocity.y)){
-            throw new Error("velocity is NaN");
-        }
-        if(isNaN(this.position.x) || isNaN(this.position.y)){
-            throw new Error("position is a NaN");
-        }
         this.orientation = this.velocity.heading();
+        this.edges();
     }
 
     // boids try not to run into each other
