@@ -1,6 +1,6 @@
 # Boids 
 
-A program to simulate the flight of a flock of birds: [https://pmarathi.github.io/Boids/](https://pmarathi.github.io/Boids/)
+A program to simulate the flight of a flock of birds: [https://pmarathi.github.io/boids/](https://pmarathi.github.io/boids/)
 
 If you right click, the boids will swarm around the cursor.
 If you left click, the boids will avoid the cursor.
