@@ -9,7 +9,7 @@ let number;
 
 // Timestamp to track the last update
 let lastUpdateTime = 0;
-const updateInterval = 500; // 1 second in milliseconds
+const updateInterval = 500; // in milliseconds
 
 // prepares p5 resources for rendering
 function setup() {
@@ -28,15 +28,10 @@ function setup() {
 
     // text for sliders
     cohesionText = createDiv(`Cohesion Factor: ${cohesionSlider.value()}`);
-    cohesionText.style('color', 'white');
     separationText = createDiv(`Separation Factor: ${separationSlider.value()}`);
-    separationText.style('color', 'white');
     alignmentText = createDiv(`Alignment Factor: ${alignmentSlider.value()}`);
-    alignmentText.style('color', 'white');
     speedText = createDiv(`Speed: ${speedSlider.value()}`);
-    speedText.style('color', 'white');
     numText = createDiv(`Number: ${numSlider.value()}`);
-    numText.style('color', 'white');
     windowResized();
 }
 
