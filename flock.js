@@ -37,11 +37,15 @@ class Flock {
         }
     }
 
-
     // renders each boid in the flock
     render(){
         for(let i = 0; i < this.boids.length; i++){
             this.boids[i].render();
         }
+    }
+
+    updateCanvasSize(width, height) {
+        Boid.width = width;
+        Boid.height = height;
     }
 }
