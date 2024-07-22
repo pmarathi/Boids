@@ -9,9 +9,6 @@ class Boid {
 
     // updates instance variables according to neighbors
     update(neighbors) {
-        // let separationVector = this.separation(neighbors);
-        // let alignmentVector = this.alignment(neighbors);
-        // let cohesionVector = this.cohesion(neighbors);
         let [cohesionVector, alignmentVector, separationVector] = this.generateVectors(neighbors);
         let mouseVector = this.towardsMouse();
 

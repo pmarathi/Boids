@@ -9,5 +9,5 @@ This program was built using [P5](https://p5js.org/).
 
 ## TODO:
 These are some potential upgrades that I may get around to doing:
-- combine cohesion, alignment, and separation into one loop (it is currently inefficient)
 - maybe change the boid asset?
+- I could optimize this some more by making my own graphics library
